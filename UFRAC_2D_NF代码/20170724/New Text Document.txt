@@ -1,0 +1,2 @@
+0724
+1.设计dense connectivity的case 和 poor connectivity的case
