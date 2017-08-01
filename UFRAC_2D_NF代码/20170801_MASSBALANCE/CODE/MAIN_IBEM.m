@@ -1,7 +1,7 @@
 function   MAIN_IBEM()
 tic;
 ClearData();
-Casename = 'sparce';
+Casename = 'test';
 clc;
 close('all');
 clear global ;
@@ -172,9 +172,6 @@ while CurT < TEND
         end
     end
     %% Save well data
-    if nt == 103
-        f = 1;
-    end
     saveWellData(CurT);
     err = MassBalance_global(CurT);
     if abs(err) > 1e-5

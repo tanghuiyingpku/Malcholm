@@ -74,9 +74,6 @@ for i = 1 : nAct0
                                 else
                                     %cross with other natural fractures
                                     if Index(bc) < 0.1
-                                        if bc == 37
-                                            f = 1;
-                                        end
                                         countN = countN + 1;
                                         Actnum(countN) = bc;
                                         countT = countT+ 1;
@@ -92,27 +89,32 @@ for i = 1 : nAct0
                     end
                     TipStates(IndexInv(i)) = 0;
                     nTip = nTip-1;
+                    for inn = 1:countN
+                        nb = Actnum(inn);
+                        AllEle_global(nb,10) = 3;
+                        PresF_global(nb) = Mat.Pp;
+                        XfF_global(nb,:) = Xfinit;
+                        Index(nb) = nAct+1;
+                        IndexInv(nAct+1) = nb;
+                        nAct = nAct + 1;
+                        isMechActive_global(nAct) = -2;
+                    end
+                    for inn = 1 : countT
+                        bc = ActTip(inn);
+                        TipStates(bc) = nTip+1;
+                        Tipcoordinate(bc,1:2) = FindTipCoord(bc);
+                        nTip = nTip + 1;
+                    end
+                    ActTip = ActTip *0;
+                    Actnum = Actnum*0;
+                    countN = 0;
+                    countT = 0;
                 end
             end
         end
     end
 end
-for i = 1:countN
-    nb = Actnum(i);
-    AllEle_global(nb,10) = 3;
-    PresF_global(nb) = Mat.Pp;
-    XfF_global(nb,:) = Xfinit;
-    Index(nb) = nAct+1;
-    IndexInv(nAct+1) = nb;
-    nAct = nAct + 1;
-    isMechActive_global(nAct) = -2;
-end
-for i = 1 : countT
-    bc = ActTip(i);
-    TipStates(bc) = nTip+1;
-    Tipcoordinate(bc,1:2) = FindTipCoord(bc);
-    nTip = nTip + 1;
-end
+
 if nAct > nAct0
     isGrow = 1;
 end

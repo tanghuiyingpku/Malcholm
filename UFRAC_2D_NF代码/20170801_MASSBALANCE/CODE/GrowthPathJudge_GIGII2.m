@@ -134,7 +134,27 @@ for i = 1 : nTip
             countT = countT+ 1;
             ActTip(countT) = ic;
         end
+        for in = 1:countN
+            nb = Actnum(in);
+            AllEle_global(nb,10) = 3;
+            PresF_global(nb) = Mat.Pp;
+            XfF_global(nb,:) = Xfinit;
+            Index(nb) = nAct+1;
+            IndexInv(nAct+1) = nb;
+            nAct = nAct + 1;
+            isMechActive_global(nAct) = -2;
+        end
+        for in = 1 : countT
+            bc = ActTip(in);
+            TipStates(bc) = nTip+1;
+            Tipcoordinate(bc,1:2) = FindTipCoord(bc);
+            nTip = nTip + 1;
+        end
+        Actnum = Actnum *0;
+        ActTip = ActTip *0;
+        countN = 0;
         count = 0;
+        countT= 0;
         jump = 0;
         past = nfcon(1);
         ic = nfcon(2);

@@ -393,7 +393,7 @@ while restart > 0.1 || iIterT > 0.1
                     if Conj < 0.1 || Index(Conj) < 1E-9
                         continue;
                     end
-                    if i == 136 && Index(Conj) == 137
+                    if i == 153 && Index(Conj) == 122
                         f = 1;
                     end
                     Lj = AllEle_global(Conj,7);
