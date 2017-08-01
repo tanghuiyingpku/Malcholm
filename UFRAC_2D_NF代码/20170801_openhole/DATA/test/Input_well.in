@@ -1,0 +1,20 @@
+NofWells
+1
+ 
+WellName
+W1
+
+   
+WellGridSize
+10
+ 
+WellLocation
+0	5 10 5
+
+Perfs
+W1   1 5  5   
+
+Schedule
+W1  0.0  100  INJ  RATE  10  PROPA  0.0  BASEFL  1  1   
+
+END
