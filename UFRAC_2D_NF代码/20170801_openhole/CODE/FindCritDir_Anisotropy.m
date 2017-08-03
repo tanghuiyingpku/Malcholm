@@ -3,9 +3,6 @@ global nTip nActTip nAct TipStatesInv;
 global ConnList_global AllEle_global;
 CritTheta = zeros(nTip,1);
 CritK  = zeros(nTip,1);
-if nAct > 214
-    f = 1;
-end
 %Find Growth Direction and Critical K calculation
 for ii = 1 : nActTip
     num = TipStatesInv(ii);

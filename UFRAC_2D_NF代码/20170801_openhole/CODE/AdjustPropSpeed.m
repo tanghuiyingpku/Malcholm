@@ -23,7 +23,7 @@ for i = 1 : nActTip
 end
 if hasNF > 0.1
     isAdjust = 1;
-    dt = stepL/maxV * 0.1;
+    dt = stepL/maxV * 0.8;
     w = 0.5;
     eta = 3;
 %     dt = dt0 * (1+w)*eta/(maxdP + w*eta);

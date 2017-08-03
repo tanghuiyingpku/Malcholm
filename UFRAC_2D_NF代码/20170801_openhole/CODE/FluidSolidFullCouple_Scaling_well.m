@@ -127,29 +127,29 @@ rightT = 1e6;
 
 %value of well unkowns initials
 nQ0 = 0;
-for ii = 1 : nwell
+for im = 1 : nwell
     wellOpen = 0;
-    if Schindex(ii) < 0.1 || isempty(well{ii}.Sch(Schindex(ii)))
+    if Schindex(im) < 0.1 || isempty(well{im}.Sch(Schindex(im)))
         continue;
     end
-    for jj = 1 :well{ii}.Sch(Schindex(ii)).nPf
-        iele =  well{ii}.Sch(Schindex(ii)).Pf(jj);
-        num = Index(well{ii}.Perfindex(iele,:));
+    for jj = 1 :well{im}.Sch(Schindex(im)).nPf
+        iele =  well{im}.Sch(Schindex(im)).Pf(jj);
+        num = Index(well{im}.Perfindex(iele,:));
         if min(num) > 1e-6
             if wellOpen < 0.1
                 nQ = nQ + 1;
                 Q(nQ) = -Mat.Sxx*1.2*1e6/Pchara;
                 wellOpen = 1;
                 nQ = nQ + 1;
-                Q(nQ) = well{ii}.Sch(Schindex(ii)).Pf_Q(jj,1)*2;
+                Q(nQ) = well{im}.Sch(Schindex(im)).Pf_Q(jj,1)*2;
             else
                 nQ = nQ + 1;
-                Q(nQ) = well{ii}.Sch(Schindex(ii)).Pf_Q(jj,1)*2;
+                Q(nQ) = well{im}.Sch(Schindex(im)).Pf_Q(jj,1)*2;
             end
             
         end
     end
-    nQ_constv(ii) = nQ-nQ0;
+    nQ_constv(im) = nQ-nQ0;
     nQ0 = nQ;
 end
 Q = Q(1:nQ);
@@ -171,7 +171,7 @@ end
 
 Khf = 1e-5;
 % Convergence Criteria
-tol = 1e-5;
+tol = 1e-4;
 Cp = Cp0;
 Xf = Xf0;
 %Previous Time Step Values
@@ -182,6 +182,19 @@ RHS0 = zeros(2*nAct + nQ,1);
 BC0   = zeros(2*nAct,1);
 ShearBC0 = ShearBC;
 isMechActive = isMechActive0;
+
+for im = 1 : nAct
+    xfluid0 = Xf0(im,:);
+    cprop0 =  Cp0(im,:);
+    cprops = sum(cprop0);
+    visco_flv(im)= dot(xfluid0,fvisco);
+    visco_slv(im) = visco_flv(im)*(1-cprops/cmax)^-n;
+    for mm = 1 : Fluid.nfluid
+        densf0v(im,mm) = CalcFLDens(mm,P_pre(im)/Pchara);
+    end
+    % Original RHS
+    [dens_slv0(im),~] = calcSLdens(P_pre(im),Fluid.nfluid,fdens,fcmp,frefp,xfluid0,cprop0,propdens);
+end
 
 while restart > 0.1 || iIterT > 0.1
     % isMechActive = isMechActive0;
@@ -218,21 +231,14 @@ while restart > 0.1 || iIterT > 0.1
         Acum = Acum *0;
         Flow = Flow *0;
         % Fluid Properties
-        for ii = 1 : nAct
-            xfluid = Xf(ii,:);
-            xfluid0 = Xf0(ii,:);
-            cprop =  Cp(ii,:);
-            cprop0 =  Cp0(ii,:);
-            cprops = sum(cprop);
-            visco_flv(ii)= dot(xfluid,fvisco);
-            visco_slv(ii) = visco_flv(ii)*(1-cprops/cmax)^-n;
+        for im = 1 : nAct
+            xfluid = Xf(im,:);
+            cprop =  Cp(im,:);
             for mm = 1 : Fluid.nfluid
-                densf0v(ii,mm) = CalcFLDens(mm,P(ii));
-                densfv(ii,mm) = CalcFLDens(mm,P(ii));
+                densfv(im,mm) = CalcFLDens(mm,P(im));
             end
             % Original RHS
-            [dens_slv(ii),dens_dpv(ii)] = calcSLdens(P(ii)*Pchara,Fluid.nfluid,fdens,fcmp,frefp,xfluid,cprop,propdens);
-            [dens_slv0(ii),~] = calcSLdens(P_pre(ii),Fluid.nfluid,fdens,fcmp,frefp,xfluid0,cprop0,propdens);
+            [dens_slv(im),dens_dpv(im)] = calcSLdens(P(im)*Pchara,Fluid.nfluid,fdens,fcmp,frefp,xfluid,cprop,propdens);
         end
         % For Debug USE
         dens_dpv = dens_dpv*Pchara;
@@ -386,7 +392,7 @@ while restart > 0.1 || iIterT > 0.1
             
             Li = AllEle(i,7);
             % Flow Flux Term
-           
+            
             for j = 1 : nConn
                 if ConnList(i,j+2) > -0.1
                     Conj =  ConnList(i,j+2);
@@ -644,7 +650,7 @@ while restart > 0.1 || iIterT > 0.1
             dt = temp;
         end
     end
-    if iIterT > 2
+    if iIterT > 1
         iIterT = 0;
         dt = temp;
     end

@@ -1,7 +1,7 @@
 function   MAIN_IBEM()
 tic;
 ClearData();
-Casename = 'testOP';
+Casename = 'test';
 clc;
 close('all');
 clear global ;
@@ -45,12 +45,15 @@ global RecordK;
 global Kindex NFgrow;
 global nActOld MassBL;
 global GrowNumber einit_global;
+global nAllEle_global   AllEle_global   ConnList_global
+
 GrowNumber = 6;
 nActOld = 0;
 Kindex =1;
 RecordK = zeros(1000,1);
 MassBL = zeros(1000,1);
 einit_global = zeros(9000,1);
+
 %% Define global variable
 InitialGlobalVaria(paraFile);
 %% Read well file and write fracture files
@@ -91,8 +94,9 @@ tt = 0;
 hasR = 0;
 dt0 = dt;
 HasInter=0;
-global nAllEle_global   AllEle_global   ConnList_global
 DrawDs(0,0);
+TEND = 50;
+
 for i = 1 : nAllEle_global
     if ConnList_global(i,2) == 3
         hold on;
@@ -175,7 +179,6 @@ while CurT < TEND
     timelist(nt) = CurT;
     nt = nt + 1;
     isEnd();
-
 end
 %% Final timestep
 toc;
@@ -183,6 +186,6 @@ saveData();
 figure
 plot(RecordK(1:Kindex),'.');
 fclose all;
-DrawDn_t(0,0)
+% DrawDn_t(0,0)
 
 end

@@ -1,12 +1,12 @@
 function [CritTheta,CritK] = FindCritDir(KI1,KI2)
-global nTip TipStates;
+global nTip TipStates Mat;
 global IndexInv nAct 
 global ConnList_global AllEle_global;
 CritTheta = zeros(nTip,1);
 CritK  = zeros(nTip,1);
 %Find Growth Direction and Critical K calculation
 for ii = 1 : nAct
-    if TipStates(IndexInv(ii)) > 0.1 && TipStates(IndexInv(ii)) < 998
+    if TipStates(IndexInv(ii)) > 0.1 %&& TipStates(IndexInv(ii)) < 999
         %if ConnList(ii,3)*ConnList(ii,4) < -0.1 %&& KI1(TipStates(ii)) > 1e-6
             if abs(KI1(TipStates(IndexInv(ii)))) < 1e-8
                 CritK(TipStates(IndexInv(ii))) = 0;
@@ -36,6 +36,7 @@ for ii = 1 : nAct
        % end
     end
 end
+CritK =(CritK/Mat.K1HF).^2;
     function [hasFind,c]= FindOpenTheta(a,b,KI1,KI2)
         [c,fc] = BiSearch(a,b,KI1,KI2);
         g = Fnc2ndOrder(c,KI1,KI2);
