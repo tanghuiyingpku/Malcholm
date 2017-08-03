@@ -95,7 +95,7 @@ hasR = 0;
 dt0 = dt;
 HasInter=0;
 DrawDs(0,0);
-TEND = 50;
+TEND = 7;
 
 for i = 1 : nAllEle_global
     if ConnList_global(i,2) == 3

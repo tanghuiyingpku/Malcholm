@@ -22,7 +22,7 @@ for itip = 1 : nTip0
         iParent = ConnList_global(nf,1);
        % if ArrivalNF(iParent) > 0.1 && TipStates0(nf) < 990
         if  TipStates0(nf) < 990
-            if  (abs(CritK(TipStates0(nf))- KIChf_tip) < epsKI || CritK(TipStates0(nf))- KIChf_tip >= epsKI) %&& KI(TipStates0(nf)) > 5E-1
+            if  (abs(CritK(TipStates0(nf))- KIChf_tip) < epsKI || CritK(TipStates0(nf))- KIChf_tip >= epsKI) %&& KII(TipStates0(nf)) > 5E-1
            %     DrawDisplacement_new();
                 RecordK(Kindex) = CritK(TipStates0(nf))/KIChf_tip;
                 Kindex =Kindex + 1;

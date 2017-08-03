@@ -1,5 +1,5 @@
 function [CritTheta,CritK] = FindCritDir_Anisotropy(KI1,KI2)
-global nTip nActTip nAct TipStatesInv;
+global nTip nActTip  TipStatesInv;
 global ConnList_global AllEle_global;
 CritTheta = zeros(nTip,1);
 CritK  = zeros(nTip,1);
