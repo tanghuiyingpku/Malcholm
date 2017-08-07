@@ -1,0 +1,6 @@
+nAct0 = nAct-1;
+while nAct0 ~= nAct
+    nAct0 = nAct;
+    NaturalEleActivationAll();
+end
+UpdateMass;

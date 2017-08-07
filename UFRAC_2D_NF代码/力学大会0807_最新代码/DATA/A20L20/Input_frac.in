@@ -1,0 +1,25 @@
+-- number of fracture
+3
+-- fracture type 1:hydraulic fracture 2: joint
+1
+2
+2
+--  Frac element initial length of boundary elements
+0.800000
+0.800000
+0.800000
+--  locations of Frac start and end
+50.000000  97.600000  50.000000  102.400000
+40.603100  76.579800  59.396900  83.420200
+40.603100  116.579800  59.396900  123.420200
+--   Boundary Value(BC)
+0.000000
+0.000000
+10.000000
+10.000000
+20.000000
+1.000000
+10.000000
+10.000000
+20.000000
+1.000000
