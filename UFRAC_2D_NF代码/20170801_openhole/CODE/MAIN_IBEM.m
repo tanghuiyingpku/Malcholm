@@ -1,7 +1,7 @@
 function   MAIN_IBEM()
 tic;
 ClearData();
-Casename = 'test';
+Casename = 'sparce';
 clc;
 close('all');
 clear global ;
@@ -95,7 +95,7 @@ hasR = 0;
 dt0 = dt;
 HasInter=0;
 DrawDs(0,0);
-TEND = 7;
+% TEND = 7;
 
 for i = 1 : nAllEle_global
     if ConnList_global(i,2) == 3

@@ -553,6 +553,9 @@ while restart > 0.1 || iIterT > 0.1
         disp('Solve Linear Equation System');
         % Jac = DumpJacob(Jac);
         dx = -Jac\RHS;
+        if cond(Jac) > 1e20
+            f = 1;
+        end
         disp('Linear Equation Solved');
         X = X0 + dx;
         Dn = X(1:nAct)*Dchara;
