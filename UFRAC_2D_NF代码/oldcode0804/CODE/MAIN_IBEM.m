@@ -179,7 +179,7 @@ while CurT < TEND
     timelist(nt) = CurT;
     nt = nt + 1;
     isEnd();
-    if CurT > 9.6
+    if CurT > 201
         f = 1;
     end
 end
